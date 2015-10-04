@@ -1,0 +1,14 @@
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\OpportunityFunds.dll.config
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\OpportunityFunds.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\OpportunityFunds.pdb
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\obj\Debug\OpportunityFunds.csprojResolveAssemblyReference.cache
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\obj\Debug\OpportunityFunds.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\obj\Debug\OpportunityFunds.pdb
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\AspNet.WebApi.HtmlMicrodataFormatter.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\Newtonsoft.Json.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\System.Net.Http.Formatting.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\System.Web.Http.dll
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\Newtonsoft.Json.xml
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\System.Net.Http.Formatting.xml
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\bin\System.Web.Http.xml
+c:\users\swap\documents\visual studio 2013\Projects\OpportunityFunds\OpportunityFunds\obj\Debug\OpportunityFunds.csproj.ResolveComReference.cache

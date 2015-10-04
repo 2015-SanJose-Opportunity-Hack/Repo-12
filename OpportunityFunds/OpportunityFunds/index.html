@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Opportunity Funds</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <style>
+        body
+        {
+            padding:50px;
+            padding-top:10px;
+            background-color:#888888;
+        }
+        html {
+            overflow-y: scroll;
+        }
+
+        #todo-list {
+            margin-bottom: 30px;
+        }
+
+        input.ng-invalid {
+            border: 1px solid red;
+        }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-controller="rest">
+    <form id="compute">
+        <div class="container-fluid">
+            <div class="row" style="text-align:center;vertical-align:central;">
+
+                <div classs="col-lg-12">
+                    <h1>{{ akk }}</h1>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+
+
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <tr>
+                            <td style="font-weight:900;
+                        background-color:darkgrey !important;" colspan="2">
+                                Opportunity Fund Loan
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Product Type</td>
+                            <td>
+                                <select ng-change="showeasypay1()" name="productselect" ng-model="data.productselect" class="form-control input-sm">
+                                    <option value="Installment">Installment</option>
+                                    <option value="EasyPay">EasyPay</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Loan Use</td>
+                            <td>
+                                <select name="loanuseselect" ng-model="data.loanuseselect" class="form-control input-sm">
+                                    <option value="Working Cap">Working Cap</option>
+                                    <option value="Vehicle/Equip.">Vehicle/Equip.</option>
+                                    <option value="Tls/Expansion">Tls/Expansion</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr><td>New Cash (new add'l funds)</td><td><input type='text' class="form-control input-sm" value="{{new_cash}}" ng-model="new_cash" name="new_cash" /></td></tr>
+
+                        <tr><td>Down % (Vehicle/Equip.)</td><td><input ng-model="down_payment" type='text' class="form-control input-sm" value="20" min="20" /></td></tr>
+
+                        <tr><td>Term (in months)</td><td><input type='text' ng-model="term_mnths" class="form-control input-sm" value="60" min="60" /></td></tr>
+
+                        <tr>
+                            <td>Frequency</td>
+                            <td>
+                                <select name="singleSelect" ng-model="data.singleSelect" class="form-control input-sm">
+                                    <option value="monthly">monthly</option>
+                                    <option value="bi-weekly">bi-weekly</option>
+                                    <option value="weekly">weekly</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr><td>Requested Loan Amount</td><td><input type='text' id="req_amt" class="form-control input-sm" ng-model="req_amt" name="req_amt" disabled /></td></tr>
+
+                        <tr><td>Loan Fee</td><td><input type='text' class="form-control input-sm" id="loan_fee" disabled /></td></tr>
+
+                        <tr><td>Rate</td><td><input id="interestrate" ng-model="interestrate" type='text' class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Down $ (Vehicle/Equip.)</td><td><input type='text' id="down_p" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Cash Needed ("Loan")</td><td><input type='text' id="cash_needed" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Amount Financed</td><td><input type='text' id="amt_fin" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Payment (based on frequency)</td><td><input type='text' id="paybfreq" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Monthly Payment</td><td><input type='text' id="mnthly_pay" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Interest</td><td><input type='text' id="total_intrst" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Cost of Loan</td><td><input type='text' id="total_cost_loan" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Payments on Loan</td><td><input type='text' id="total_pay" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>APR</td><td><input type='text' id="apr" class="form-control input-sm" disabled /></td></tr>
+
+                    </table>
+
+
+
+                </div>
+
+                <div class="col-lg-3" ng-show="show1easypay">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <tr>
+                            <td style="font-weight:900;
+                        background-color:darkgrey !important;" colspan=" 2">
+                                Opportunity Fund Easy Pay
+                            </td>
+
+                        </tr>
+
+                        <tr><td>Avg Monthly Sales</td><td><input type='text' class="form-control input-sm" id="avg_mnthly_sales" ng-model="avg_mnthly_sales" disabled /></td></tr>
+                        <tr><td>Low</td><td><input type='text' class="form-control input-sm" ng-model="Low" /></td></tr>
+                        <tr><td>Medium</td><td><input type='text' class="form-control input-sm" ng-model="medium" /></td></tr>
+                        <tr><td>High</td><td><input type='text' class="form-control input-sm" ng-model="High" /></td></tr>
+
+                        <tr><td>Avg Monthly CC Sales</td><td><input type='text' class="form-control input-sm" id="avg_mnthly_cc_sales" ng-model="avg_mnthly_cc_sales" disabled /></td></tr>
+                        <tr><td>% of CC Volume</td><td><input type='text' class="form-control input-sm" id="ccvolume" ng-model="ccvolume" /></td></tr>
+                        <tr><td>Low</td><td><input type='text' class="form-control input-sm" id="lowcc" ng-model="lowcc" disabled /></td></tr>
+                        <tr><td>Medium</td><td><input type='text' class="form-contro`l input-sm" id="mediumcc" ng-model="mediumcc" disabled /></td></tr>
+                        <tr><td>High</td><td><input type='text' class="form-control input-sm" id="highcc" ng-model="highcc" disabled /></td></tr>
+                        <tr><td>Split of Mthly CC Sales</td><td><input type='text' id="split_mnthly_cc_sale" class="avg_mnthly_cc_sales" ng-model="split_mnthly_cc_sale" disabled /></td></tr>
+                        <tr><td>Split of Mthly Total Sales</td><td><input type='text' id="split_mnthly_total_sale" class="form-control input-sm" ng-model="split_mnthly_total_sale" disabled /></td></tr>
+                        <tr><td>Est. Mthly Payment</td><td><input type='text' class="form-control input-sm" id="est_mnthly_pay" ng-model="est_mnthly_pay" disabled /></td></tr>
+                        <tr><td>Monthly Minimum</td><td><input type='text' class="form-control input-sm" ng-model="mnthly_min" id="mnthly_min" disabled /></td></tr>
+                        <tr><td>Est. Payment Low Mth</td><td><input type='text' class="form-control input-sm" id="est_pay_low_mnth" ng-model="est_pay_low_mnth" disabled /></td></tr>
+
+                    </table>
+
+
+
+                </div>
+
+
+
+
+
+                <div class="col-lg-3">
+
+
+
+                    <table class="table table-striped table-bordered table-condensed table-hover" width="647" ng-show="showme">
+                        <tr>
+                            <td style="font-weight:900;
+                        background-color:aquamarine !important;" colspan="2">
+                                Other Loan
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Product Type</td>
+                            <td>
+                                <select name="productselect1" ng-change="showeasypay2()" ng-model=" data.productselect1" class="form-control input-sm">
+                                    <option value="Installment">Installment</option>
+                                    <option value="EasyPay">EasyPay</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Loan Use</td>
+                            <td>
+                                <select name="loanuseselect1" ng-model="data.loanuseselect1" class="form-control input-sm">
+                                    <option selected="selected" value="Working Cap">Working Cap</option>
+                                    <option value="Vehicle/Equip.">Vehicle/Equip.</option>
+                                    <option value="Tls/Expansion">Tls/Expansion</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr><td>New Cash (new add'l funds)</td><td><input type='text' class="form-control input-sm" value="{{new_cash1}}" ng-model="new_cash1" name="new_cash" /></td></tr>
+
+                        <tr><td>Requested Loan Amount</td><td><input type='text' disabled value="{{req_amt1}}" class="form-control input-sm" ng-model="req_amt1" name="req_amt" /></td></tr>
+
+                        <tr><td>Down % (Vehicle/Equip.)</td><td><input ng-model="down_payment1" type='text' class="form-control input-sm" value="20" min="20" max="100" /></td></tr>
+
+                        <tr><td>Term (in months)</td><td><input type='text' ng-model="term_mnths1" class="form-control input-sm" value="60" min="60" /></td></tr>
+                        <tr>
+                            <td>Frequency</td>
+                            <td>
+                                <select name="singleSelect1" ng-model="data.singleSelect1" class="form-control input-sm">
+                                    <option selected="selected" value="monthly">monthly</option>
+                                    <option value="bi-weekly">bi-weekly</option>
+                                    <option value="weekly">weekly</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr><td>Loan Fee</td><td><input type='text' class="form-control input-sm" id="loan_fee1" disabled /></td></tr>
+
+                        <tr>
+                            <td>Rate</td>
+                            <td>
+                                <input ng-model="interestrate1" type='text' class="form-control input-sm" title="Depending on
+                      Credit History, Time in Business and Business Cashflow this loan could receive this lower
+      rate … BDO/LC will inform client of final rate after application has been completed disabled" />
+                            </td>
+                        </tr>
+
+                        <tr><td>Down $ (Vehicle/Equip.)</td><td><input type='text' id="down_p1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Cash Needed ("Loan")</td><td><input type='text' id="cash_needed1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Amount Financed</td><td><input type='text' id="amt_fin1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Payment (based on frequency)</td><td><input type='text' id="paybfreq1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Monthly Payment</td><td><input type='text' id="mnthly_pay1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Interest</td><td><input type='text' id="total_intrst1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Cost of Loan</td><td><input type='text' id="total_cost_loan1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>Total Payments on Loan</td><td><input type='text' id="total_pay1" class="form-control input-sm" disabled /></td></tr>
+
+                        <tr><td>APR</td><td><input type='text' id="apr1" class="form-control input-sm" disabled /></td></tr>
+
+                    </table>
+
+
+
+                </div>
+
+
+
+                <div class="col-lg-3" ng-show="show2easypay">
+                    <table class="table table-striped table-bordered table-condensed table-hover" width="647">
+                        <tr>
+                            <td style="font-weight:900;
+                        background-color:aquamarine !important;" colspan="2">
+                                Other Loan Easy Pay
+                            </td>
+
+                        </tr>
+                        <tr><td>Avg Monthly Sales</td><td><input type='text' class="form-control input-sm" ng-model="avg_mnthly_sales1" disabled /></td></tr>
+                        <tr><td>Low</td><td><input type='text' class="form-control input-sm" ng-model="Low1" /></td></tr>
+                        <tr><td>Medium</td><td><input type='text' class="form-control input-sm" ng-model="medium1" /></td></tr>
+                        <tr><td>High</td><td><input type='text' class="form-control input-sm" ng-model="High1" /></td></tr>
+
+                        <tr><td>Avg Monthly CC Sales</td><td><input type='text' class="form-control input-sm" id="avg_mnthly_cc_sales1" ng-model="avg_mnthly_cc_sales1" disabled /></td></tr>
+                        <tr><td>% of CC Volume</td><td><input type='text' class="form-control input-sm" id="ccvolume1" ng-model="ccvolume1" /></td></tr>
+                        <tr><td>Low</td><td><input type='text' class="form-control input-sm" id="lowcc1" ng-model="lowcc1" disabled /></td></tr>
+                        <tr><td>Medium</td><td><input type='text' class="form-control input-sm" id="mediumcc1" ng-model="mediumcc1" disabled /></td></tr>
+                        <tr><td>High</td><td><input type='text' class="form-control input-sm" id="highcc1" ng-model="highcc1" disabled /></td></tr>
+                        <tr><td>Split of Mthly CC Sales</td><td><input type='text' id="split_mnthly_cc_sale1" class="avg_mnthly_cc_sales" ng-model="split_mnthly_cc_sale1" disabled /></td></tr>
+                        <tr><td>Split of Mthly Total Sales</td><td><input type='text' id="split_mnthly_total_sale1" class="form-control input-sm" ng-model="split_mnthly_total_sale1" disabled /></td></tr>
+                        <tr><td>Est. Mthly Payment</td><td><input type='text' class="form-control input-sm" id="est_mnthly_pay1" ng-model="est_mnthly_pay1" disabled /></td></tr>
+                        <tr><td>Monthly Minimum</td><td><input type='text' class="form-control input-sm" ng-model="mnthly_min1" id="mnthly_min1" disabled /></td></tr>
+                        <tr><td>Est. Payment Low Mth</td><td><input type='text' class="form-control input-sm" id="est_pay_low_mnth1" ng-model="est_pay_low_mnth1" disabled /></td></tr>
+
+                    </table>
+                                </div>
+<div class="row">
+                    <div class="col-lg-12">
+                        <input class="btn btn-info col-sm-offset-4 col-sm-4 text-center" type="button" value="ADD MORE" ng-click="showme=true" />
+                        <br><br>
+                        <input ng-click="calculate()" data-toggle="modal" data-target="#myModal" class="btn btn-success col-sm-offset-4 col-sm-4 text-center" type="submit" value="COMPUTE" ngclick="Submit" />
+                    </div>
+                </div></div>
+        </div>
+      
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <p>Calculating........</p>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </form>
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+
+    var app = angular.module("myApp", []);
+
+    app.controller('rest', function ($scope, $http) {
+        $scope.akk = "Loan Calculator";
+        $scope.new_cash;
+        $scope.req_amt = $scope.new_cash;
+        $scope.showHonda = false;
+        $scope.showeasypay1 = function () {
+            if ($scope.data.productselect == "EasyPay") {
+                $scope.show1easypay = true;
+            }
+            else {
+                $scope.show1easypay = false;
+            }
+        }
+
+        $scope.showeasypay2 = function () {
+            if ($scope.data.productselect1 == "EasyPay") {
+                $scope.show2easypay = true;
+            }
+            else {
+                $scope.show2easypay = false;
+            }
+        }
+        $scope.calculate = function () {
+            //$http({
+            //    url: 'ReturnExcelData.ashx',
+            //    method: 'POST',
+            //    json: true,
+            //    headers: {
+            //        "content-type": "application/json",
+            //    },
+            //    data: {  product_type: 'sd', Loan_Use: $scope.data.loanuseselect, New_Cash: $scope.new_cash, Down_pay: $scope.down_payment, Terms: $scope.term_mnths, frequency: $scope.data.singleSelect }
+
+
+            //}).then(function successCallback(response) {
+            //    $scope.summary = response.data;
+            //}, function errorCallback(response) {
+            //    // called asynchronously if an error occurs
+            //    // or server returns response with an error status.
+            //});
+            var Data;
+            console.log($scope.showme);
+            if ($scope.showme == 'true') {
+                Data = {
+                    product_type: $scope.data.productselect, Loan_Use: $scope.data.loanuseselect, New_Cash: $scope.new_cash, Down_pay: $scope.down_payment, Terms: $scope.term_mnths, frequency: $scope.data.singleSelect, multiple_item: 'false', easy_pay1: $scope.show1easypay,
+                    Low: $scope.Low, medium: $scope.medium, High: $scope.High, ccvolume: $scope.ccvolume
+                };
+            }
+            else {
+
+                Data = {
+                    product_type: $scope.data.productselect, Loan_Use: $scope.data.loanuseselect, New_Cash: $scope.new_cash, Down_pay: $scope.down_payment, Terms: $scope.term_mnths, frequency: $scope.data.singleSelect, multiple_item: 'true', easy_pay1: $scope.show1easypay, easy_pay2: $scope.show2easypay,
+                    product_type1: $scope.data.productselect1, Loan_Use1: $scope.data.loanuseselect1, New_Cash1: $scope.new_cash1, Down_pay1: $scope.down_payment1, Terms1: $scope.term_mnths1, frequency1: $scope.data.singleSelect1, interest_rate: $scope.interestrate1,
+                    Low1: $scope.Low1, medium1: $scope.medium1, High1: $scope.High1, ccvolume1: $scope.ccvolume1
+                };
+            }
+            $.ajax({
+                type: "POST",
+                url: 'ReturnExcelData.ashx',
+                data: Data,
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    $('#down_p').val(data[6].value);
+                    $('#cash_needed').val(data[7].value);
+                    $('#loan_fee').val(data[8].value);
+                    $('#amt_fin').val(data[9].value);
+                    $('#interestrate').val(data[11].value);
+                    $('#req_amt').val(data[5].value);
+                    $('#paybfreq').val(data[13].value);
+                    $('#mnthly_pay').val(data[14].value);
+                    $('#total_intrst').val(data[15].value);
+                    $('#total_cost_loan').val(data[16].value);
+                    $('#total_pay').val(data[17].value);
+                    $('#apr').val(data[18].value);
+                    $('#avg_mnthly_sales').val(data[0].easyusevalue);
+                    $('#avg_mnthly_cc_sales').val(data[5].easyusevalue);
+                    $('#lowcc').val(data[6].easyusevalue);
+                    $('#mediumcc').val(data[7].easyusevalue);
+                    $('#highcc').val(data[8].easyusevalue);
+                    $('#split_mnthly_cc_sale').val(data[12].easyusevalue);
+                    $('#split_mnthly_total_sale').val(data[13].easyusevalue);
+                    $('#est_mnthly_pay').val(data[14].easyusevalue);
+                    $('#mnthly_min').val(data[15].easyusevalue);
+                    $('#est_pay_low_mnth').val(data[16].easyusevalue);
+                    if (data.length > 20) {
+                        $('#down_p1').val(data[26].value);
+                        $('#cash_needed1').val(data[27].value);
+                        $('#loan_fee1').val(data[28].value);
+                        $('#amt_fin1').val(data[29].value);
+                        $('#interestrate1').val(data[31].value);
+                        $('#paybfreq1').val(data[33].value);
+                        $('#mnthly_pay1').val(data[34].value);
+                        $('#total_intrst1').val(data[35].value);
+                        $('#total_cost_loan1').val(data[36].value);
+                        $('#total_pay1').val(data[37].value);
+                        $('#apr1').val(data[38].value);
+
+                    }
+                  
+                },
+                complete:function(response)
+                {
+                    $('#myModal').modal('toggle');
+                },
+                error: function (error) {
+                    alert('error; ' + eval(error));
+                    $('#myModal').modal('toggle');
+                }
+            });
+           
+        }
+    });
+
+    function rest($scope) {
+        $scope.compare = function () {
+            $scope.showHonda = true;
+        };
+    }
+
+
+    $(document).ready(function () {
+        console.log("code is here");
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#highcc').focus();
+        })
+        //$("#compute").validate({ // initialize the plugin
+        //    rules: {
+        //        new_cash: "required",
+        //        req_amt: "required"
+        //    },
+        //    messages: {
+        //        new_cash: "Please enter the amount",
+        //        req_amt: "Please enter the requested amount"
+        //    }
+        //});
+
+    });
+
+</script>
